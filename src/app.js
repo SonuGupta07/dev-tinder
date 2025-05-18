@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-app.use("/hello",(req,res)=>{
+app.use("/hello/123",(req,res)=>{
     res.send("hello hello hello")
 })
 app.use("/",(req,res)=>{
@@ -13,3 +13,4 @@ app.use("/test" ,(req,res)=>{
 app.listen(3000,()=>{
     console.log("server is succesfully listening on port 3000")
 });
+//order of writing the route matter
