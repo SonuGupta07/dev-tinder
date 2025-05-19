@@ -1,16 +1,23 @@
 const express = require('express');
 const app = express();
-app.use("/hello/123",(req,res)=>{
-    res.send("hello hello hello")
-})
-app.use("/",(req,res)=>{
-    res.send("this is dashboard")
-})
-app.use("/test" ,(req,res)=>{
-    res.send("hello from the server")
 
-})
-app.listen(3000,()=>{
-    console.log("server is succesfully listening on port 3000")
+// Route 1
+app.get("/user", (req, res) => {
+    res.send({firstname:"sonu",seondName:"gupta"});
 });
-//order of writing the route matter
+app.post("/user",(req,res)=>{
+    //db is saving
+    res.send("data is saved successfully")
+})
+app.delete('/user',(req,res)=>{
+    res.send("the user get deleted")
+})
+
+// Route 3
+app.use("/test", (req, res) => {
+    res.send("hello from the server");
+});
+
+app.listen(3000, () => {
+    console.log("server is successfully listening on port 3000");
+});
