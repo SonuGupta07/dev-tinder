@@ -15,7 +15,7 @@ app.post("/signup",async(req,res)=>{
  res.send("user added succesfully ")
     }
     catch(err){
-        res.status(400).send("error during the saving user + err.message")
+        res.status(400).send("error during the saving user "+err.message)
     }
 
 })
@@ -50,6 +50,36 @@ app.get("/feed", async(req,res)=>{
     }
 
 })
+//delete the user form the database 
+app.delete("/user",async(req,res)=>{
+    const userId = req.body.userId;
+    try{
+        const user = await User.findByIdAndDelete(userId);
+        console.log(user)
+        res.send("the user is get deleted ")
+ 
+    }
+    catch(err){
+        res.status(400).send("something went wrong")
+    }
+})
+app.patch("/user",async(req,res)=>{
+    const userId = req.body.userId;
+    const data  = req.body;
+    
+    try{
+        //it ignore all field like userId and only update such field which matches with your schema
+        //by default it return the before docuemnt
+        const user = await User.findByIdAndUpdate({_id:userId},data,{returnDocument:"before", runValidators:true, })
+        res.send("the user get updated")
+      
+
+    }catch(err){
+        res.status(400).send("something went wrong" + err.message)
+    }
+})
+
+
 connectDB().then(()=>{
     console.log("database is connected")
         

@@ -2136,6 +2136,7 @@ Yes, **MongoDB** is often called "schema-less", but that doesn't mean it has **n
 
 // Document 2
 { "username": "Bob", "email": "bob@example.com", "active": true }
+```
 Both documents are valid in the same collection.
 
 ✅ Schema Validation (Optional Feature)
@@ -2173,10 +2174,52 @@ Schema-less Means	Schema is not enforced unless you want
 
 ✅ So yes, MongoDB has a schema — but you choose whether to enforce it.
 
-Copy
-Edit
 
 
+## Here’s the difference between PUT and PATCH in simple terms:
+
+🔁 PUT
+Replaces the entire resource with new data.
+
+If a field is missing, it may be removed.
+
+Think of it like replacing the whole file.
+
+Example:
+
+http
+
+PUT /user/123
+{
+  "name": "Sonu",
+  "email": "sonu@example.com"
+}
+→ This replaces everything for user 123.
+
+🔧 PATCH
+Updates only specific fields of a resource.
+
+The rest of the data remains unchanged.
+
+Think of it like editing part of a file.
+
+Example:
+
+http
+
+PATCH /user/123
+{
+  "email": "newemail@example.com"
+}
+→ Only the email is changed; other fields like name stay the same.
+
+✅ Summary
+Feature	PUT	PATCH
+Purpose	Replace whole resource	Update part of the resource
+Data Needed	Full object	Only changed fields
+Effect	Overwrites missing fields	Keeps unchanged fields intact
+
+Use PUT when you want to replace, and PATCH when you want to update partially.
 
 
 
