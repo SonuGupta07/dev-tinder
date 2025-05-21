@@ -2221,6 +2221,8 @@ Effect	Overwrites missing fields	Keeps unchanged fields intact
 
 Use PUT when you want to replace, and PATCH when you want to update partially.
 
-
+- bcrypt is used to hash the password 
+- which is not decrypt back if a password is come we again hash it and compare it
+- it uses blowfish cipher algorithm
 
 
