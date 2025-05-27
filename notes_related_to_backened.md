@@ -2226,3 +2226,96 @@ Use PUT when you want to replace, and PATCH when you want to update partially.
 - it uses blowfish cipher algorithm
 - you can expire you cookies and jwt token any one of them you want 
 
+Great thinking! You're asking the **right kind of question** — "why not just use `app.use()` everywhere instead of introducing `router` and increasing complexity?" Let's break it down simply:
+
+---
+
+### 🤔 Why not use `app.use()` in every file?
+
+You **can**, but here's **why we usually don't**:
+
+---
+
+### 1. **Access to `app`**
+
+* `app` is created in your main file like:
+
+  ```js
+  const app = express();
+  ```
+* If you want to use `app.use()` in another file, you’d have to **pass `app` to every route file**, which:
+
+  * Makes your code **tightly coupled**
+  * Increases confusion when your project grows
+
+---
+
+### 2. **Router makes code modular and reusable**
+
+* With `router`, every file can define routes **independently**.
+* You don’t need to pass the `app` object around.
+* You just export the router and plug it in once.
+
+---
+
+### 3. **Cleaner and more organized code**
+
+Without router:
+
+```js
+// user.js
+const express = require('express');
+const app = express(); // now we have two apps! 😱
+
+app.get('/user', (req, res) => {
+  res.send('User');
+});
+module.exports = app;
+```
+
+With router:
+
+```js
+// user.js
+const express = require('express');
+const router = express.Router();
+
+router.get('/', (req, res) => {
+  res.send('User');
+});
+module.exports = router;
+```
+
+Then in `app.js`:
+
+```js
+const userRoutes = require('./user');
+app.use('/user', userRoutes);
+```
+
+---
+
+### 4. **Scaling is easier**
+
+With routers:
+
+* Add more route files (e.g., `product.js`, `auth.js`)
+* All follow the same clean structure
+* Easy to maintain, test, and debug
+
+---
+
+### ✅ Summary (Simple Words)
+
+| Using `app.use` in every file  | Using `router` in route files |
+| ------------------------------ | ----------------------------- |
+| Need to share `app` everywhere | Each file is independent      |
+| Hard to manage in big apps     | Easy to manage and scale      |
+| Not modular                    | Modular and organized         |
+| Not recommended by Express     | Official and clean approach   |
+
+---
+
+### 💡 Conclusion
+
+We use `router` to **keep files clean, separate, and easier to manage**, especially in **large projects**. It's not really “more complex” — it's actually **simplifying your code** in the long run.
